@@ -946,7 +946,6 @@ OQS_API OQS_SIG *OQS_SIG_new(const char *method_name) {
 #else
 		return NULL;
 #endif
-	}
 		// EDIT-WHEN-ADDING-SIG
 	} else {
 		return NULL;
