@@ -11,8 +11,8 @@
 
 OQS_SIG* OQS_SIG_aigis_sig_param_i_new(void);
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_i_keypair(uint8_t* public_key, uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_i_sign(uint8_t* signature, size_t* signature_len, const uint8_t* message, size_t message_len, const uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_i_verify(const uint8_t* message, size_t message_len, const uint8_t* signature, size_t signature_len, const uint8_t* public_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_i_sign(uint8_t* signature, size_t* signature_len,  uint8_t* message, size_t message_len,  uint8_t* secret_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_i_verify( uint8_t* message, size_t message_len,  uint8_t* signature, size_t signature_len,  uint8_t* public_key);
 #endif
 
 // Aigis-sig PARAM II
@@ -23,8 +23,8 @@ OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_i_verify(const uint8_t* message, size
 
 OQS_SIG* OQS_SIG_aigis_sig_param_ii_new(void);
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_ii_keypair(uint8_t* public_key, uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_ii_sign(uint8_t* signature, size_t* signature_len, const uint8_t* message, size_t message_len, const uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_ii_verify(const uint8_t* message, size_t message_len, const uint8_t* signature, size_t signature_len, const uint8_t* public_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_ii_sign(uint8_t* signature, size_t* signature_len,  uint8_t* message, size_t message_len,  uint8_t* secret_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_ii_verify( uint8_t* message, size_t message_len,  uint8_t* signature, size_t signature_len,  uint8_t* public_key);
 #endif
 
 // Aigis-sig PARAM IIb
@@ -35,8 +35,8 @@ OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_ii_verify(const uint8_t* message, siz
 
 OQS_SIG* OQS_SIG_aigis_sig_param_iib_new(void);
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_keypair(uint8_t* public_key, uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_sign(uint8_t* signature, size_t* signature_len, const uint8_t* message, size_t message_len, const uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_verify(const uint8_t* message, size_t message_len, const uint8_t* signature, size_t signature_len, const uint8_t* public_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_sign(uint8_t* signature, size_t* signature_len,  uint8_t* message, size_t message_len,  uint8_t* secret_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_verify( uint8_t* message, size_t message_len,  uint8_t* signature, size_t signature_len,  uint8_t* public_key);
 #endif
 
 // Aigis-sig PARAM III
@@ -48,8 +48,8 @@ OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_verify(const uint8_t* message, si
 
 OQS_SIG* OQS_SIG_aigis_sig_param_iii_new(void);
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iii_keypair(uint8_t* public_key, uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iii_sign(uint8_t* signature, size_t* signature_len, const uint8_t* message, size_t message_len, const uint8_t* secret_key);
-OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iii_verify(const uint8_t* message, size_t message_len, const uint8_t* signature, size_t signature_len, const uint8_t* public_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iii_sign(uint8_t* signature, size_t* signature_len,  uint8_t* message, size_t message_len,  uint8_t* secret_key);
+OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iii_verify( uint8_t* message, size_t message_len,  uint8_t* signature, size_t signature_len,  uint8_t* public_key);
 #endif
 
 #endif
