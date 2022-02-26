@@ -512,11 +512,13 @@ OQS_API int OQS_SIG_alg_is_enabled(const char *method_name) {
 		return 1;
 #else
 		return 0;
+#endif
 	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iii)) {
 #ifdef OQS_ENABLE_SIG_aigis_sig_param_iii
 		return 1;
 #else 
 		return 0;
+#endif
 		// EDIT-WHEN-ADDING-SIG
 	} else {
 		return 0;
@@ -925,21 +927,25 @@ OQS_API OQS_SIG *OQS_SIG_new(const char *method_name) {
 		return OQS_SIG_aigis_sig_param_i_new();
 #else 
 		return NULL;
+#endif
 	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_ii)) {
 #ifdef OQS_ENABLE_SIG_aigis_sig_param_ii
 		return OQS_SIG_aigis_sig_param_ii_new();
 #else
 		return NULL;
+#endif
 	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iib)) {
 #ifdef OQS_ENABLE_SIG_aigis_sig_param_iib
 		return OQS_SIG_aigis_sig_param_iib_new();
 #else
 		return NULL;
+#endif
 	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iii)) {
 #ifdef OQS_ENABLE_SIG_aigis_sig_param_iii
 		return OQS_SIG_aigis_sig_param_iii_new();
 #else
 		return NULL;
+#endif
 	}
 		// EDIT-WHEN-ADDING-SIG
 	} else {
