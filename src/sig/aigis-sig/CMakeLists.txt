@@ -27,3 +27,5 @@ if(OQS_ENABLE_SIG_aigis_sig_param_iii)
     target_include_directories(aigis_sig_param_iii PRIVATE ${PROJECT_SOURCE_DIR}/src/common/pqclean_shims)
     set(_AIGIS_SIG_OBJS ${_AIGIS_SIG_OBJS} $<TARGET_OBJECTS:aigis_sig_param_iii>)
 endif()
+
+set(AIGIS_SIG_OBJS ${_AIGIS_SIG_OBJS} PARENT_SCOPE)
