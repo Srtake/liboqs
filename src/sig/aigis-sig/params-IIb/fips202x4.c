@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <immintrin.h>
 #include "params.h"
-#include "keccak4x\KeccakP-1600-times4-SnP.h"
+#include "keccak4x/KeccakP-1600-times4-SnP.h"
 #include "fips202x4.h"
 #include "fips202.h"
 
