@@ -290,4 +290,10 @@
 #cmakedefine OQS_ENABLE_SIG_sphincs_shake256_256s_robust_avx2 1
 #cmakedefine OQS_ENABLE_SIG_sphincs_shake256_256s_simple 1
 #cmakedefine OQS_ENABLE_SIG_sphincs_shake256_256s_simple_avx2 1
+
+#cmakedefine OQS_ENABLE_SIG_AIGIS_SIG 1
+#cmakedefine OQS_ENABLE_SIG_aigis_sig_param_i 1
+#cmakedefine OQS_ENABLE_SIG_aigis_sig_param_ii 1
+#cmakedefine OQS_ENABLE_SIG_aigis_sig_param_iib 1
+#cmakedefine OQS_ENABLE_SIG_aigis_sig_param_iii 1
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ADD_ALG_ENABLE_DEFINES_END

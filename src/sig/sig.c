@@ -80,7 +80,12 @@ OQS_API const char *OQS_SIG_alg_identifier(size_t i) {
 		OQS_SIG_alg_picnic_L5_full,
 		OQS_SIG_alg_picnic3_L1,
 		OQS_SIG_alg_picnic3_L3,
-		OQS_SIG_alg_picnic3_L5
+		OQS_SIG_alg_picnic3_L5,
+		///// Algorithms in CACR competition
+		OQS_SIG_alg_aigis_sig_param_i,
+		OQS_SIG_alg_aigis_sig_param_ii,
+		OQS_SIG_alg_aigis_sig_param_iib,
+		OQS_SIG_alg_aigis_sig_param_iii,
 	};
 	if (i >= OQS_SIG_algs_length) {
 		return NULL;
@@ -490,6 +495,28 @@ OQS_API int OQS_SIG_alg_is_enabled(const char *method_name) {
 #else
 		return 0;
 #endif
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_i)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_i
+		return 1;
+#else
+		return 0;
+#endif
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_ii)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_ii
+		return 1;
+#else
+		return 0;
+#endif
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iib)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_iib
+		return 1;
+#else
+		return 0;
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iii)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_iii
+		return 1;
+#else 
+		return 0;
 		// EDIT-WHEN-ADDING-SIG
 	} else {
 		return 0;
@@ -893,6 +920,27 @@ OQS_API OQS_SIG *OQS_SIG_new(const char *method_name) {
 #else
 		return NULL;
 #endif
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_i)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_i
+		return OQS_SIG_aigis_sig_param_i_new();
+#else 
+		return NULL;
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_ii)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_ii
+		return OQS_SIG_aigis_sig_param_ii_new();
+#else
+		return NULL;
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iib)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_iib
+		return OQS_SIG_aigis_sig_param_iib_new();
+#else
+		return NULL;
+	} else if (0 == strcasecmp(method_name, OQS_SIG_alg_aigis_sig_param_iii)) {
+#ifdef OQS_ENABLE_SIG_aigis_sig_param_iii
+		return OQS_SIG_aigis_sig_param_iii_new();
+#else
+		return NULL;
+	}
 		// EDIT-WHEN-ADDING-SIG
 	} else {
 		return NULL;

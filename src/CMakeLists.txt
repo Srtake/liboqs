@@ -63,6 +63,10 @@ if(OQS_ENABLE_SIG_SPHINCS)
     add_subdirectory(sig/sphincs)
     set(SIG_OBJS ${SIG_OBJS} ${SPHINCS_OBJS})
 endif()
+if(OQS_ENABLE_SIG_AIGIS)
+    add_subdirectory(sig/aigis-sig)
+    set(SIG_OBJS ${SIG_OBJS} ${AIGIS_SIG_OBJS})
+endif()
 ##### OQS_COPY_FROM_UPSTREAM_FRAGMENT_ADD_ALG_OBJECTS_END
 
 add_library(oqs kem/kem.c

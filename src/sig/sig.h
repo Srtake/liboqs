@@ -162,11 +162,19 @@ extern "C" {
 #define OQS_SIG_alg_sphincs_shake256_256s_robust "SPHINCS+-SHAKE256-256s-robust"
 /** Algorithm identifier for SPHINCS+-SHAKE256-256s-simple */
 #define OQS_SIG_alg_sphincs_shake256_256s_simple "SPHINCS+-SHAKE256-256s-simple"
+/** Algorithm identifier for Aigis-sig-PARAM-I */
+#define OQS_SIG_alg_aigis_sig_param_i "Aigis-sig-PARAM-I"
+/** Algorithm identifier for Aigis-sig-PARAM-II */
+#define OQS_SIG_alg_aigis_sig_param_ii "Aigis-sig-PARAM-II"
+/** Algorithm identifier for Aigis-sig-PARAM-IIb */
+#define OQS_SIG_alg_aigis_sig_param_iib "Aigis-sig-PARAM-IIb"
+/** Algorithm identifier for Aigis-sig-PARAM-III */
+#define OQS_SIG_alg_aigis_sig_param_iii "Aigis-sig-PARAM-III"
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALG_IDENTIFIER_END
 // EDIT-WHEN-ADDING-SIG
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALGS_LENGTH_START
 /** Number of algorithm identifiers above. */
-#define OQS_SIG_algs_length 65
+#define OQS_SIG_algs_length 69
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALGS_LENGTH_END
 
 /**
@@ -348,6 +356,9 @@ OQS_API void OQS_SIG_free(OQS_SIG *sig);
 #ifdef OQS_ENABLE_SIG_SPHINCS
 #include <oqs/sig_sphincs.h>
 #endif /* OQS_ENABLE_SIG_SPHINCS */
+#ifdef OQS_ENABLE_SIG_AIGIS_SIG
+#include <oqs/sig_aigis-sig.h>
+#endif /* OQS_ENABLE_SIG_AIGIS_SIG */
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_INCLUDE_END
 // EDIT-WHEN-ADDING-SIG
 
