@@ -18,9 +18,9 @@ OQS_SIG* OQS_SIG_aigis_sig_param_iii_new() {
 
     sig->length_public_key = OQS_SIG_aigis_sig_param_iii_length_public_key;
     sig->length_secret_key = OQS_SIG_aigis_sig_param_iii_length_secret_key;
-    sig->length_signature = OQS_SIG_aigis_sig_param_iiiii_length_signature;
+    sig->length_signature = OQS_SIG_aigis_sig_param_iii_length_signature;
 
-    sig->keypair = OQS_SIG_aigis_sig_param_i_keypair;
+    sig->keypair = OQS_SIG_aigis_sig_param_iii_keypair;
     sig->sign = OQS_SIG_aigis_sig_param_iii_sign;
     sig->verify = OQS_SIG_aigis_sig_param_iii_verify;
 
