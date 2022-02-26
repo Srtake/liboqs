@@ -2,7 +2,7 @@
 #include <oqs/sig.h>
 #include <oqs/sig_aigis-sig.h>
 
-#if defined (OQS_ENABLE_SIG_aigis_sig_param_iii)
+#if defined OQS_ENABLE_SIG_aigis_sig_param_iii
 
 OQS_SIG* OQS_SIG_aigis_sig_param_iii_new() {
     OQS_SIG* sig = malloc(sizeof(OQS_SIG));
