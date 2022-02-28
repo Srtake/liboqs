@@ -49,7 +49,7 @@ PKC_ALG_API puchar_byts_t sig_get_sn_byts();
  *		 sk_byts：私钥字节长度
  * 返回：成功执行返回0，否则返回错误代码（负数）
  *************************************************************************/
-PKC_ALG_API int sig_keygen(
+PKC_ALG_API int sig_keygen_param_i(
 	puchar_t pk, puchar_byts_t* pk_byts, 
 	puchar_t sk, puchar_byts_t* sk_byts);
 
@@ -64,7 +64,7 @@ PKC_ALG_API int sig_keygen(
  *		 sn_byts：签名字节长度
  * 返回：成功执行返回0，否则返回错误代码（负数）
  *************************************************************************/
-PKC_ALG_API int sig_sign(
+PKC_ALG_API int sig_sign_param_i(
 	puchar_t sk, puchar_byts_t sk_byts,
 	puchar_t m, puchar_byts_t m_byts,
 	puchar_t sn, puchar_byts_t* sn_byts);
@@ -81,7 +81,7 @@ PKC_ALG_API int sig_sign(
  * 返回：成功执行返回1（验证通过）或0（验证不通过），否则返回错误代码（负
  *		 数）
  *************************************************************************/
-PKC_ALG_API int sig_verf(
+PKC_ALG_API int sig_verf_param_i(
 	puchar_t pk, puchar_byts_t pk_byts,
 	puchar_t sn, puchar_byts_t sn_byts,
 	puchar_t m, puchar_byts_t m_byts);

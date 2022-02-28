@@ -8,7 +8,7 @@
 * pack the public key pk, 
 * where pk = rho|t1
 **************************************************/
-void pack_pk(unsigned char pk[PK_SIZE_PACKED],
+void pack_pk_param_ii(unsigned char pk[PK_SIZE_PACKED],
              const unsigned char rho[SEEDBYTES],
              const polyveck *t1)
 {
@@ -19,9 +19,9 @@ void pack_pk(unsigned char pk[PK_SIZE_PACKED],
   pk += SEEDBYTES;
 
   for(i = 0; i < PARAM_K; ++i)
-    polyt1_pack(pk + i*POLT1_SIZE_PACKED, t1->vec+i);
+    polyt1_pack_param_ii(pk + i*POLT1_SIZE_PACKED, t1->vec+i);
 }
-void unpack_pk(unsigned char rho[SEEDBYTES],
+void unpack_pk_param_ii(unsigned char rho[SEEDBYTES],
                polyveck *t1,
                const unsigned char pk[PK_SIZE_PACKED])
 {
@@ -32,14 +32,14 @@ void unpack_pk(unsigned char rho[SEEDBYTES],
   pk += SEEDBYTES;
 
   for(i = 0; i < PARAM_K; ++i)
-    polyt1_unpack(t1->vec+i, pk + i*POLT1_SIZE_PACKED);
+    polyt1_unpack_param_ii(t1->vec+i, pk + i*POLT1_SIZE_PACKED);
 }
 
 /*************************************************
 * pack the secret key sk, 
 * where sk = rho|key|hash(pk)|s1|s2|t0
 **************************************************/
-void pack_sk(unsigned char sk[SK_SIZE_PACKED],
+void pack_sk_param_ii(unsigned char sk[SK_SIZE_PACKED],
              const unsigned char buf[2*SEEDBYTES + CRHBYTES],
              const polyvecl *s1,
              const polyveck *s2,
@@ -52,17 +52,17 @@ void pack_sk(unsigned char sk[SK_SIZE_PACKED],
   sk += 2*SEEDBYTES + CRHBYTES;
 
   for(i = 0; i < PARAM_L; ++i)
-    polyeta1_pack(sk + i*POLETA1_SIZE_PACKED, s1->vec+i);
+    polyeta1_pack_param_ii(sk + i*POLETA1_SIZE_PACKED, s1->vec+i);
   sk += PARAM_L*POLETA1_SIZE_PACKED;
 
   for(i = 0; i < PARAM_K; ++i)
-    polyeta2_pack(sk + i*POLETA2_SIZE_PACKED, s2->vec+i);
+    polyeta2_pack_param_ii(sk + i*POLETA2_SIZE_PACKED, s2->vec+i);
   sk += PARAM_K*POLETA2_SIZE_PACKED;
 
   for(i = 0; i < PARAM_K; ++i)
-    polyt0_pack(sk + i*POLT0_SIZE_PACKED, t0->vec+i);
+    polyt0_pack_param_ii(sk + i*POLT0_SIZE_PACKED, t0->vec+i);
 }
-void unpack_sk(unsigned char buf[2*SEEDBYTES + CRHBYTES],
+void unpack_sk_param_ii(unsigned char buf[2*SEEDBYTES + CRHBYTES],
                polyvecl *s1,
                polyveck *s2,
                polyveck *t0,
@@ -75,22 +75,22 @@ void unpack_sk(unsigned char buf[2*SEEDBYTES + CRHBYTES],
   sk += 2*SEEDBYTES + CRHBYTES;
 
   for(i=0; i < PARAM_L; ++i)
-    polyeta1_unpack(s1->vec+i, sk + i*POLETA1_SIZE_PACKED);
+    polyeta1_unpack_param_ii(s1->vec+i, sk + i*POLETA1_SIZE_PACKED);
   sk += PARAM_L*POLETA1_SIZE_PACKED;
   
   for(i=0; i < PARAM_K; ++i)
-    polyeta2_unpack(s2->vec+i, sk + i*POLETA2_SIZE_PACKED);
+    polyeta2_unpack_param_ii(s2->vec+i, sk + i*POLETA2_SIZE_PACKED);
   sk += PARAM_K*POLETA2_SIZE_PACKED;
 
   for(i=0; i < PARAM_K; ++i)
-    polyt0_unpack(t0->vec+i, sk + i*POLT0_SIZE_PACKED);
+    polyt0_unpack_param_ii(t0->vec+i, sk + i*POLT0_SIZE_PACKED);
 }
 
 /*************************************************
 * pack the signature sm, 
 * where sm = z|h|c
 **************************************************/
-void pack_sig(unsigned char sm[SIG_SIZE_PACKED],
+void pack_sig_param_ii(unsigned char sm[SIG_SIZE_PACKED],
               const polyvecl *z,
               const polyveck *h,
               const poly *c)
@@ -99,7 +99,7 @@ void pack_sig(unsigned char sm[SIG_SIZE_PACKED],
   uint64_t signs, mask;
 
   for(i = 0; i < PARAM_L; ++i)
-    polyz_pack(sm + i*POLZ_SIZE_PACKED, z->vec+i);
+    polyz_pack_param_ii(sm + i*POLZ_SIZE_PACKED, z->vec+i);
   sm += PARAM_L*POLZ_SIZE_PACKED;
 
   /* Encode h */
@@ -131,7 +131,7 @@ void pack_sig(unsigned char sm[SIG_SIZE_PACKED],
   for(i = 0; i < 8; ++i)
     sm[i] = signs >> 8*i;
 }
-void unpack_sig(polyvecl *z,
+void unpack_sig_param_ii(polyvecl *z,
                 polyveck *h,
                 poly *c,
                 const unsigned char sm[SIG_SIZE_PACKED])
@@ -140,7 +140,7 @@ void unpack_sig(polyvecl *z,
   uint64_t signs, mask;
 
   for(i = 0; i < PARAM_L; ++i)
-    polyz_unpack(z->vec+i, sm + i*POLZ_SIZE_PACKED);
+    polyz_unpack_param_ii(z->vec+i, sm + i*POLZ_SIZE_PACKED);
   sm += PARAM_L*POLZ_SIZE_PACKED;
 
   /* Decode h */

@@ -9,7 +9,7 @@
 
 
 
-void poly_freeze2q(poly *a) 
+void poly_freeze2q_param_i(poly *a)
 {
     int i;
     __m256i *pa = (__m256i *) a->coeffs;
@@ -24,7 +24,7 @@ void poly_freeze2q(poly *a)
       pa[i] = _mm256_add_epi32(pa[i],temp);      
     }
 }
-void poly_freeze4q(poly *a) 
+void poly_freeze4q_param_i(poly *a)
 {
     int i;
     __m256i *pa  = (__m256i *) a->coeffs;
@@ -44,7 +44,7 @@ void poly_freeze4q(poly *a)
       pa[i] = _mm256_add_epi32(pa[i],temp);      
     }
 }
-void poly_barrat_reduce(poly *a)
+void poly_barrat_reduce_param_i(poly *a)
 {
 	int i;
     __m256i *pa  = (__m256i *) a->coeffs;
@@ -66,7 +66,7 @@ void poly_barrat_reduce(poly *a)
       pa[i] = _mm256_sub_epi32(pa[i],temp);    
     }
 }
-void poly_decompose(poly *r1,poly *r0, const poly *a)
+void poly_decompose_param_i(poly *r1,poly *r0, const poly *a)
 {
   int i;
   __m256i * pa = (__m256i *) a->coeffs;
@@ -123,7 +123,7 @@ void poly_decompose(poly *r1,poly *r0, const poly *a)
   }	
 }
 
-void poly_power2round(poly *r1,poly *r0, const poly *a)
+void poly_power2round_param_i(poly *r1,poly *r0, const poly *a)
 {
   int i;
   __m256i * pa = (__m256i *) a->coeffs;
@@ -150,7 +150,7 @@ void poly_power2round(poly *r1,poly *r0, const poly *a)
   	pr1[i] = _mm256_srai_epi32(t2,PARAM_D);
   }
 }
-uint32_t poly_make_hint(poly *h, const poly*a, const poly*b)
+uint32_t poly_make_hint_param_i(poly *h, const poly*a, const poly*b)
 {
 	int i;
 	uint32_t s = 0;
@@ -164,7 +164,7 @@ uint32_t poly_make_hint(poly *h, const poly*a, const poly*b)
 		}
 	return s;
 }
-void poly_add(poly *c, const poly *a, const poly *b)  {
+void poly_add_param_i(poly *c, const poly *a, const poly *b)  {
   unsigned int i;
   
   __m256i * pa = (__m256i *) a->coeffs;
@@ -176,7 +176,7 @@ void poly_add(poly *c, const poly *a, const poly *b)  {
      
 }
 
-void poly_sub(poly *c, const poly *a, const poly *b) {
+void poly_sub_param_i(poly *c, const poly *a, const poly *b) {
   unsigned int i;
 
   __m256i * pa = (__m256i *) a->coeffs;
@@ -193,7 +193,7 @@ void poly_sub(poly *c, const poly *a, const poly *b) {
     
 }
 
-void poly_neg(poly *a) {
+void poly_neg_param_i(poly *a) {
   unsigned int i;
     
   __m256i * pa = (__m256i *) a->coeffs;
@@ -203,22 +203,22 @@ void poly_neg(poly *a) {
     pa[i] = _mm256_sub_epi32(dq8x,pa[i]);
 }
 
-void poly_shiftl(poly *a, unsigned int k) {
+void poly_shiftl_param_i(poly *a, unsigned int k) {
   unsigned int i;
   __m256i * pa = (__m256i *) a->coeffs;
   for(i = 0; i < PARAM_N/8; ++i)
     pa[i] = _mm256_slli_epi32(pa[i],k);
 }
 
-void poly_ntt(poly *a) {
-  ntt(a->coeffs);
+void poly_ntt_param_i(poly *a) {
+  ntt_param_i(a->coeffs);
 }
 
-void poly_invntt_montgomery(poly *a) 
+void poly_invntt_montgomery_param_i(poly *a)
 {
-	invntt(a->coeffs); 
+	invntt_param_i(a->coeffs);
 }
-void poly_pointwise_invmontgomery(poly *c, const poly *a, const poly *b) 
+void poly_pointwise_invmontgomery_param_i(poly *c, const poly *a, const poly *b)
 {
   int i;
   __m256i * pa = (__m256i *) a->coeffs;
@@ -254,26 +254,7 @@ void poly_pointwise_invmontgomery(poly *c, const poly *a, const poly *b)
   }
 }
 
-/*
-int poly_chknorm(const poly *a, uint32_t B) {
-  unsigned int i;
-  int32_t t;
-
-  for(i = 0; i < PARAM_N; ++i) {
-    t = (PARAM_Q-1)/2 - a->coeffs[i];
-    t ^= (t >> 31);
-    t = (PARAM_Q-1)/2 - t;
-
-    if((uint32_t)t >= B)
-      return 1;
-  }
-
-  return 0;
-}
-*/
-
-
-int  poly_chknorm(const poly *a, uint32_t B)
+int  poly_chknorm_param_i(const poly *a, uint32_t B)
 {
 	unsigned int i;
 	__m256i * pa = (__m256i *) a->coeffs;
@@ -294,25 +275,6 @@ int  poly_chknorm(const poly *a, uint32_t B)
 
 	return _mm256_movemask_epi8(r);//the value is non-zero if some a[i] > B
 }
-/*void poly_uniform(poly *a, unsigned char *buf) {
-  unsigned int ctr, pos;
-  uint32_t t;
-
-  ctr = pos = 0;
-  while(ctr < PARAM_N) {
-    t  = buf[pos++];
-    t |= (uint32_t)buf[pos++] << 8;
-    t |= (uint32_t)buf[pos++] << 16;
-#if QBITS == 21
-    t &= 0x1FFFFF;
-#elif QBITS == 22
-    t &= 0x3FFFFF;
-#endif
-
-    if(t < PARAM_Q)
-      a->coeffs[ctr++] = t;
-  }
-}*/
 
 static const uint64_t idx[256][4] = {
 {0x800000008,0x800000008,0x800000008,0x800000008},
@@ -572,7 +534,7 @@ static const uint64_t idx[256][4] = {
 {0x200000001,0x400000003,0x600000005,0x800000007},
 {0x100000000,0x300000002,0x500000004,0x700000006},
 };
-const unsigned int popcount[256] = {
+const unsigned int popcount_param_i[256] = {
 0,1,1,2,1,2,2,3,
 1,2,2,3,2,3,3,4,
 1,2,2,3,2,3,3,4,
@@ -606,7 +568,7 @@ const unsigned int popcount[256] = {
 4,5,5,6,5,6,6,7,
 5,6,6,7,6,7,7,8
 };
-void poly_uniform(poly *a, unsigned char *buf)
+void poly_uniform_param_i(poly *a, unsigned char *buf)
 {
 	unsigned int ctr, pos, offset;
 	uint32_t t;
@@ -635,7 +597,7 @@ void poly_uniform(poly *a, unsigned char *buf)
 
 		_mm256_storeu_si256((__m256i *)&a->coeffs[ctr], tmp);
 
-		offset = popcount[t];
+		offset = popcount_param_i[t];
 
 		ctr += offset;
 
@@ -657,7 +619,7 @@ void poly_uniform(poly *a, unsigned char *buf)
 
 		_mm_storeu_si128((__m128i *)&a->coeffs[ctr], tmp0);
 
-		offset = popcount[t];
+		offset = popcount_param_i[t];
 
 		ctr += offset;
 
@@ -680,7 +642,7 @@ void poly_uniform(poly *a, unsigned char *buf)
 }
 
 
-static void rej_eta1(uint32_t *a,const unsigned char *buf)
+static void rej_eta1_param_i(uint32_t *a,const unsigned char *buf)
 {
 #if ETA1 > 3
 #error "rej_eta1() assumes ETA1 <= 3"
@@ -787,7 +749,7 @@ static void rej_eta1(uint32_t *a,const unsigned char *buf)
 #endif
 }
 
-static unsigned int rej_eta2(uint32_t *a,unsigned int len,const unsigned char *buf)
+static unsigned int rej_eta2_param_i(uint32_t *a,unsigned int len,const unsigned char *buf)
 {
 #if ETA2 >7 || ETA2 <3
 #error "rej_eta2() assumes 3 <= ETA2 <=7"
@@ -831,7 +793,7 @@ static unsigned int rej_eta2(uint32_t *a,unsigned int len,const unsigned char *b
 
 
 
-void poly_uniform_eta1(poly *a,
+void poly_uniform_eta1_param_i(poly *a,
                       const unsigned char seed[SEEDBYTES], 
                       unsigned char nonce)
 {
@@ -854,10 +816,10 @@ void poly_uniform_eta1(poly *a,
 
   shake256(outbuf, sizeof(outbuf),inbuf, SEEDBYTES + 1);
 #endif
-  rej_eta1(a->coeffs,outbuf);
+  rej_eta1_param_i(a->coeffs,outbuf);
 }
 
-void poly_uniform_eta1_3x(poly *a0,
+void poly_uniform_eta1_3x_param_i(poly *a0,
                           poly *a1,
                           poly *a2,
                           const unsigned char seed[SEEDBYTES],
@@ -886,12 +848,12 @@ void poly_uniform_eta1_3x(poly *a0,
 
   shake256_4x(outbuf[0], outbuf[1], outbuf[2], outbuf[3], 2*SHAKE256_RATE, inbuf[0], inbuf[1], inbuf[2], inbuf[3],SEEDBYTES + 1);
 
-  rej_eta1(a0->coeffs,outbuf[0]);
-  rej_eta1(a1->coeffs,outbuf[1]);
-  rej_eta1(a2->coeffs,outbuf[2]);
+  rej_eta1_param_i(a0->coeffs,outbuf[0]);
+  rej_eta1_param_i(a1->coeffs,outbuf[1]);
+  rej_eta1_param_i(a2->coeffs,outbuf[2]);
 }
 
-void poly_uniform_eta1_4x(poly *a0,
+void poly_uniform_eta1_4x_param_i(poly *a0,
                           poly *a1,
                           poly *a2,
                           poly *a3,
@@ -918,14 +880,14 @@ void poly_uniform_eta1_4x(poly *a0,
     
     shake256_4x(outbuf[0], outbuf[1], outbuf[2], outbuf[3], 2*SHAKE256_RATE, inbuf[0], inbuf[1], inbuf[2], inbuf[3],SEEDBYTES + 1);
     
-    rej_eta1(a0->coeffs,outbuf[0]);
-    rej_eta1(a1->coeffs,outbuf[1]);
-    rej_eta1(a2->coeffs,outbuf[2]);
-    rej_eta1(a3->coeffs,outbuf[3]);
+    rej_eta1_param_i(a0->coeffs,outbuf[0]);
+    rej_eta1_param_i(a1->coeffs,outbuf[1]);
+    rej_eta1_param_i(a2->coeffs,outbuf[2]);
+    rej_eta1_param_i(a3->coeffs,outbuf[3]);
 }
 
 
-void poly_uniform_eta2_4x(poly *a0,
+void poly_uniform_eta2_4x_param_i(poly *a0,
                           poly *a1,
                           poly *a2,
                           poly *a3,
@@ -961,12 +923,12 @@ void poly_uniform_eta2_4x(poly *a0,
     
     shake256_4x(outbuf[0], outbuf[1], outbuf[2], outbuf[3], len, inbuf[0], inbuf[1], inbuf[2], inbuf[3],SEEDBYTES + 1);
     
-    rej_eta2(a0->coeffs,PARAM_N,outbuf[0]);
-    rej_eta2(a1->coeffs,PARAM_N,outbuf[1]);
-    rej_eta2(a2->coeffs,PARAM_N,outbuf[2]);
-    rej_eta2(a3->coeffs,PARAM_N,outbuf[3]);
+    rej_eta2_param_i(a0->coeffs,PARAM_N,outbuf[0]);
+    rej_eta2_param_i(a1->coeffs,PARAM_N,outbuf[1]);
+    rej_eta2_param_i(a2->coeffs,PARAM_N,outbuf[2]);
+    rej_eta2_param_i(a3->coeffs,PARAM_N,outbuf[3]);
 }
-void poly_uniform_eta2_2x(poly *a0,
+void poly_uniform_eta2_2x_param_i(poly *a0,
 	poly *a1,
 	const unsigned char seed[SEEDBYTES],
 	unsigned char nonce0,
@@ -998,11 +960,11 @@ void poly_uniform_eta2_2x(poly *a0,
 
 	shake256_4x(outbuf[0], outbuf[1], outbuf[2], outbuf[3], len, inbuf[0], inbuf[1], inbuf[2], inbuf[3], SEEDBYTES + 1);
 
-	rej_eta2(a0->coeffs, PARAM_N, outbuf[0]);
-	rej_eta2(a1->coeffs, PARAM_N, outbuf[1]);
+	rej_eta2_param_i(a0->coeffs, PARAM_N, outbuf[0]);
+	rej_eta2_param_i(a1->coeffs, PARAM_N, outbuf[1]);
 }
 
-void poly_uniform_eta2(poly *a,
+void poly_uniform_eta2_param_i(poly *a,
                       const unsigned char seed[SEEDBYTES], 
                       unsigned char nonce)
 {
@@ -1022,7 +984,7 @@ void poly_uniform_eta2(poly *a,
 #endif
   aes256ctr_init(&state, seed, nonce);
   aes256ctr_squeezeblocks(outbuf, sizeof(outbuf) / 128, &state);
-  rej_eta2(a->coeffs, PARAM_N, outbuf);
+  rej_eta2_param_i(a->coeffs, PARAM_N, outbuf);
 #else
   for (i = 0; i < SEEDBYTES; ++i)
 	  inbuf[i] = seed[i];
@@ -1031,7 +993,7 @@ void poly_uniform_eta2(poly *a,
 #if ETA2==3
   unsigned char outbuf[2 * SHAKE256_RATE];
   shake256(outbuf, sizeof(outbuf), inbuf, SEEDBYTES + 1);
-  rej_eta2(a->coeffs, PARAM_N, outbuf);
+  rej_eta2_param_i(a->coeffs, PARAM_N, outbuf);
 #elif ETA2==5
   unsigned int pos;
   uint64_t state[25];
@@ -1047,7 +1009,7 @@ void poly_uniform_eta2(poly *a,
   if (2 * SHAKE256_RATE - pos < 85)
 	  shake256_squeezeblocks(&outbuf[2 * SHAKE256_RATE], 1, state);
 
-  rej_eta2(&a->coeffs[223], 33, &outbuf[pos]);
+  rej_eta2_param_i(&a->coeffs[223], 33, &outbuf[pos]);
 #else
 #if ETA2 == 4
   unsigned char outbuf[3 * SHAKE256_RATE];
@@ -1055,13 +1017,13 @@ void poly_uniform_eta2(poly *a,
   unsigned char outbuf[2 * SHAKE256_RATE];
 #endif
   shake256(outbuf, sizeof(outbuf), inbuf, SEEDBYTES + 1);
-  rej_eta2(a->coeffs, PARAM_N, outbuf);
+  rej_eta2_param_i(a->coeffs, PARAM_N, outbuf);
 #endif
 #endif
 
 }
 
-void poly_uniform_gamma1m1(poly *a,
+void poly_uniform_gamma1m1_param_i(poly *a,
                            const unsigned char seed[SEEDBYTES + CRHBYTES],
                            uint16_t nonce)
 {
@@ -1132,7 +1094,7 @@ void poly_uniform_gamma1m1(poly *a,
 
 }
 
-static void uniform_gamma1m1(poly *a,unsigned char *buf)
+static void uniform_gamma1m1_param_i(poly *a,unsigned char *buf)
 {
 #if GAMMA1 != 131072
 #error "poly_uniform_gamma1m1() assumes GAMMA1 == 131072"
@@ -1182,7 +1144,7 @@ static void uniform_gamma1m1(poly *a,unsigned char *buf)
     pos += 5;
   }while(ctr < PARAM_N);
 }
-void poly_uniform_gamma1m1_3x(poly *a0,
+void poly_uniform_gamma1m1_3x_param_i(poly *a0,
                               poly *a1,
                               poly *a2,
                               const unsigned char seed[SEEDBYTES + CRHBYTES],
@@ -1211,11 +1173,11 @@ void poly_uniform_gamma1m1_3x(poly *a0,
 
   shake256_4x(outbuf[0], outbuf[1], outbuf[2], outbuf[3], 640, inbuf[0], inbuf[1], inbuf[2], inbuf[3],SEEDBYTES + CRHBYTES + 2);
   
-  uniform_gamma1m1(a0,outbuf[0]);
-  uniform_gamma1m1(a1,outbuf[1]);
-  uniform_gamma1m1(a2,outbuf[2]);
+  uniform_gamma1m1_param_i(a0,outbuf[0]);
+  uniform_gamma1m1_param_i(a1,outbuf[1]);
+  uniform_gamma1m1_param_i(a2,outbuf[2]);
 }
-void poly_uniform_gamma1m1_4x(poly *a0,
+void poly_uniform_gamma1m1_4x_param_i(poly *a0,
                               poly *a1,
                               poly *a2,
                               poly *a3,
@@ -1246,14 +1208,14 @@ void poly_uniform_gamma1m1_4x(poly *a0,
 
   shake256_4x(outbuf[0], outbuf[1], outbuf[2], outbuf[3], 640, inbuf[0], inbuf[1], inbuf[2], inbuf[3],SEEDBYTES + CRHBYTES + 2);
   
-  uniform_gamma1m1(a0,outbuf[0]);
-  uniform_gamma1m1(a1,outbuf[1]);
-  uniform_gamma1m1(a2,outbuf[2]);
-  uniform_gamma1m1(a3,outbuf[3]);
+  uniform_gamma1m1_param_i(a0,outbuf[0]);
+  uniform_gamma1m1_param_i(a1,outbuf[1]);
+  uniform_gamma1m1_param_i(a2,outbuf[2]);
+  uniform_gamma1m1_param_i(a3,outbuf[3]);
   
 }
 
-void polyeta1_pack(unsigned char *r, const poly *a) {
+void polyeta1_pack_param_i(unsigned char *r, const poly *a) {
 #if ETA1 > 3
 #error "polyeta1_pack() assumes ETA1 <= 3"
 #endif
@@ -1291,7 +1253,7 @@ void polyeta1_pack(unsigned char *r, const poly *a) {
     }
 #endif
 }
-void polyeta2_pack(unsigned char *r, const poly *a) {
+void polyeta2_pack_param_i(unsigned char *r, const poly *a) {
 #if ETA2 > 7
 #error "polyeta2_pack() assumes ETA2 <= 7"
 #endif
@@ -1329,7 +1291,7 @@ void polyeta2_pack(unsigned char *r, const poly *a) {
 #endif
 }
 
-void polyeta1_unpack(poly *r, const unsigned char *a)
+void polyeta1_unpack_param_i(poly *r, const unsigned char *a)
 {
 #if ETA1 > 3
 #error "polyeta1_unpack() assumes ETA1 <= 3"
@@ -1370,7 +1332,7 @@ void polyeta1_unpack(poly *r, const unsigned char *a)
     }
 #endif
 }
-void polyeta2_unpack(poly *r, const unsigned char *a)
+void polyeta2_unpack_param_i(poly *r, const unsigned char *a)
 {
 #if ETA2 > 7
 #error "polyeta2_unpack() assumes ETA2 <= 7"
@@ -1407,7 +1369,7 @@ void polyeta2_unpack(poly *r, const unsigned char *a)
 #endif
 }
 
-void polyt1_pack(unsigned char *r, const poly *a)
+void polyt1_pack_param_i(unsigned char *r, const poly *a)
 {
 #if QBITS - PARAM_D != 8
 #error "polyt1_pack() assumes QBITS - PARAM_D == 8"
@@ -1418,7 +1380,7 @@ void polyt1_pack(unsigned char *r, const poly *a)
         r[i]  =  a->coeffs[i];
 }
 
-void polyt1_unpack(poly *r, const unsigned char *a)
+void polyt1_unpack_param_i(poly *r, const unsigned char *a)
 {
 #if QBITS - PARAM_D != 8
 #error "polyt1_unpack() assumes QBITS - PARAM_D == 8"
@@ -1429,7 +1391,7 @@ void polyt1_unpack(poly *r, const unsigned char *a)
         r->coeffs[i]  =  a[i];
 }
 
-void polyt0_pack(unsigned char *r, const poly *a) {
+void polyt0_pack_param_i(unsigned char *r, const poly *a) {
     
 #if PARAM_D!=13 && PARAM_D!=14
 #error "polyt0_unpack() assumes PARAM_D== 13 or 14"
@@ -1491,7 +1453,7 @@ void polyt0_pack(unsigned char *r, const poly *a) {
 #endif
 }
 
-void polyt0_unpack(poly *r, const unsigned char *a)
+void polyt0_unpack_param_i(poly *r, const unsigned char *a)
 {
 #if PARAM_D!=13 && PARAM_D!=14
 #error "polyt0_unpack() assumes PARAM_D== 13 or 14"
@@ -1564,7 +1526,7 @@ void polyt0_unpack(poly *r, const unsigned char *a)
 #endif
 }
 
-void polyz_pack(unsigned char *r, const poly *a) {
+void polyz_pack_param_i(unsigned char *r, const poly *a) {
 #if GAMMA1 - BETA1 > (1 << 17)
 #error "polyz_pack() assumes GAMMA1 - BETA1 <= 2^{17}"
 #endif
@@ -1598,7 +1560,7 @@ void polyz_pack(unsigned char *r, const poly *a) {
     }
 }
 
-void polyz_unpack(poly *r, const unsigned char *a) {
+void polyz_unpack_param_i(poly *r, const unsigned char *a) {
     
 #if GAMMA1 - BETA1 > (1 << 17)
 #error "polyz_unpack() assumes GAMMA1 - BETA1 <= 2^{17}"
@@ -1633,7 +1595,7 @@ void polyz_unpack(poly *r, const unsigned char *a) {
     }
 }
 
-void polyw1_pack(unsigned char *r, const poly *a) 
+void polyw1_pack_param_i(unsigned char *r, const poly *a)
 {
 #if PARAM_Q/ALPHA > 8
 #error "polyw1_pack() assumes PARAM_Q/ALPHA -1 <= 7"

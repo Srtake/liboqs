@@ -5,17 +5,17 @@
 #include "poly.h"
 #include "polyvec.h"
 
-void expand_mat(polyvecl *mat, const unsigned char rho[SEEDBYTES]);
-void challenge(poly *c, const unsigned char mu[CRHBYTES],
+void expand_mat_param_iib(polyvecl *mat, const unsigned char rho[SEEDBYTES]);
+void challenge_param_iib(poly *c, const unsigned char mu[CRHBYTES],
                const polyveck *w1);
 
-int msig_keygen(unsigned char *pk, unsigned char *sk);
+int msig_keygen_param_iib(unsigned char *pk, unsigned char *sk);
 
-int msig_sign(unsigned char *sk, 
+int msig_sign_param_iib(unsigned char *sk,
                    unsigned char *m, unsigned long long mlen, 
                    unsigned char *sm, unsigned long long *smlen);                     
 
-int msig_verf(unsigned char *pk,
+int msig_verf_param_iib(unsigned char *pk,
                    unsigned char *sm, unsigned long long smlen,
                    unsigned char *m, unsigned long long mlen);
 

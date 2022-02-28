@@ -1,4 +1,3 @@
-
 #include "params.h"
 #include "poly.h"
 #include "polyvec.h"
@@ -13,7 +12,6 @@ void pack_pk(unsigned char pk[PK_SIZE_PACKED],
              const polyveck *t1)
 {
   unsigned int i;
-
   for(i = 0; i < SEEDBYTES; ++i)
     pk[i] = rho[i];
   pk += SEEDBYTES;

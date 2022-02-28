@@ -6,6 +6,6 @@
 
 
 
-void ntt(uint32_t p[PARAM_N]);
-void invntt(uint32_t p[PARAM_N]);
+void ntt_param_ii(uint32_t p[PARAM_N]);
+void invntt_param_ii(uint32_t p[PARAM_N]);
 #endif

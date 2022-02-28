@@ -5,152 +5,152 @@
 #include "ntt.h"
 
 
-void polyvecl_freeze2q(polyvecl *v) {
+void polyvecl_freeze2q_param_ii(polyvecl *v) {
     unsigned int i;
     
     for(i = 0; i < PARAM_L; ++i)
-        poly_freeze2q(&v->vec[i]);
+        poly_freeze2q_param_ii(&v->vec[i]);
 }
 
-void polyvecl_freeze4q(polyvecl *v) {
+void polyvecl_freeze4q_param_ii(polyvecl *v) {
     unsigned int i;  
     for(i = 0; i < PARAM_L; ++i)
-        poly_freeze4q(&v->vec[i]);
+        poly_freeze4q_param_ii(&v->vec[i]);
 }
 
-void polyvecl_add(polyvecl *w, const polyvecl *u, const polyvecl *v) {
+void polyvecl_add_param_ii(polyvecl *w, const polyvecl *u, const polyvecl *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_L; ++i)
-    poly_add(w->vec+i, u->vec+i, v->vec+i);
+    poly_add_param_ii(w->vec+i, u->vec+i, v->vec+i);
 }
 
-void polyvecl_ntt(polyvecl *v) {
+void polyvecl_ntt_param_ii(polyvecl *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_L; ++i)
-    poly_ntt(v->vec+i);
+    poly_ntt_param_ii(v->vec+i);
 }
 
-void polyvecl_pointwise_acc_invmontgomery(poly *w,
+void polyvecl_pointwise_acc_invmontgomery_param_ii(poly *w,
                                           const polyvecl *u,
                                           const polyvecl *v) 
 {
   unsigned int i;
   poly t;
 
-  poly_pointwise_invmontgomery(w, u->vec+0, v->vec+0);
+  poly_pointwise_invmontgomery_param_ii(w, u->vec+0, v->vec+0);
 
   for(i = 1; i < PARAM_L; ++i) {
-    poly_pointwise_invmontgomery(&t, u->vec+i, v->vec+i);
-    poly_add(w, w, &t);
+    poly_pointwise_invmontgomery_param_ii(&t, u->vec+i, v->vec+i);
+    poly_add_param_ii(w, w, &t);
   }
-  poly_barrat_reduce(w);
+  poly_barrat_reduce_param_ii(w);
 }
 
-int polyvecl_chknorm(const polyvecl *v, uint32_t bound)  {
+int polyvecl_chknorm_param_ii(const polyvecl *v, uint32_t bound)  {
   unsigned int i;
   int ret = 0;
 
   for(i = 0; i < PARAM_L; ++i)
-    ret |= poly_chknorm(v->vec+i, bound);
+    ret |= poly_chknorm_param_ii(v->vec+i, bound);
 
   return ret;
 }
 
-void polyveck_freeze2q(polyveck *v)  {
+void polyveck_freeze2q_param_ii(polyveck *v)  {
     unsigned int i;
     for(i = 0; i < PARAM_K; ++i)
-        poly_freeze2q(&v->vec[i]);
+        poly_freeze2q_param_ii(&v->vec[i]);
 }
 
-void polyveck_freeze4q(polyveck *v)  {
+void polyveck_freeze4q_param_ii(polyveck *v)  {
     unsigned int i;
     for(i = 0; i < PARAM_K; ++i)
-        poly_freeze4q(&v->vec[i]);
+        poly_freeze4q_param_ii(&v->vec[i]);
 }
 
-void polyveck_add(polyveck *w, const polyveck *u, const polyveck *v) {
+void polyveck_add_param_ii(polyveck *w, const polyveck *u, const polyveck *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_K; ++i)
-    poly_add(w->vec+i, u->vec+i, v->vec+i);
+    poly_add_param_ii(w->vec+i, u->vec+i, v->vec+i);
 }
 
-void polyveck_sub(polyveck *w, const polyveck *u, const polyveck *v) {
+void polyveck_sub_param_ii(polyveck *w, const polyveck *u, const polyveck *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_K; ++i)
-    poly_sub(w->vec+i, u->vec+i, v->vec+i);
+    poly_sub_param_ii(w->vec+i, u->vec+i, v->vec+i);
 }
 
-void polyveck_neg(polyveck *v) { 
+void polyveck_neg_param_ii(polyveck *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_K; ++i)
-    poly_neg(v->vec+i);
+    poly_neg_param_ii(v->vec+i);
 }
 
-void polyveck_shiftl(polyveck *v, unsigned int k) { 
+void polyveck_shiftl_param_ii(polyveck *v, unsigned int k) {
   unsigned int i;
 
   for(i = 0; i < PARAM_K; ++i)
-    poly_shiftl(v->vec+i, k);
+    poly_shiftl_param_ii(v->vec+i, k);
 }
 
-void polyveck_ntt(polyveck *v) {
+void polyveck_ntt_param_ii(polyveck *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_K; ++i)
-    poly_ntt(v->vec+i);
+    poly_ntt_param_ii(v->vec+i);
 }
 
-void polyveck_invntt_montgomery(polyveck *v) {
+void polyveck_invntt_montgomery_param_ii(polyveck *v) {
   unsigned int i;
 
   for(i = 0; i < PARAM_K; ++i)
-    poly_invntt_montgomery(v->vec+i);
+    poly_invntt_montgomery_param_ii(v->vec+i);
 }
 
-int polyveck_chknorm(const polyveck *v, uint32_t bound) {
+int polyveck_chknorm_param_ii(const polyveck *v, uint32_t bound) {
   unsigned int i;
   int ret = 0;
 
   for(i = 0; i < PARAM_K; ++i)
-    ret |= poly_chknorm(v->vec+i, bound);
+    ret |= poly_chknorm_param_ii(v->vec+i, bound);
 
   return ret;
 }
 
-void polyveck_power2round(polyveck *v1, polyveck *v0, const polyveck *v) {
+void polyveck_power2round_param_ii(polyveck *v1, polyveck *v0, const polyveck *v) {
   unsigned int i;
   for(i = 0; i < PARAM_K; ++i)
-  	poly_power2round(&v1->vec[i],&v0->vec[i], &v->vec[i]);
+  	poly_power2round_param_ii(&v1->vec[i],&v0->vec[i], &v->vec[i]);
 }
 
-void polyveck_decompose(polyveck *v1, polyveck *v0, const polyveck *v) {
+void polyveck_decompose_param_ii(polyveck *v1, polyveck *v0, const polyveck *v) {
   unsigned int i;
   for(i = 0; i < PARAM_K; ++i)
-    poly_decompose(&v1->vec[i],&v0->vec[i],&v->vec[i]);
+    poly_decompose_param_ii(&v1->vec[i],&v0->vec[i],&v->vec[i]);
 }
 
-unsigned int polyveck_make_hint(polyveck *h,
+unsigned int polyveck_make_hint_param_ii(polyveck *h,
                                 const polyveck *u,
                                 const polyveck *v)
 {
   unsigned int i,s = 0;
   for(i = 0; i < PARAM_K; ++i)
-      s+=poly_make_hint(&h->vec[i],&u->vec[i],&v->vec[i]);
+      s+=poly_make_hint_param_ii(&h->vec[i],&u->vec[i],&v->vec[i]);
   
   return s;
 }
 
-void polyveck_use_hint(polyveck *w, const polyveck *u, const polyveck *h) {
+void polyveck_use_hint_param_ii(polyveck *w, const polyveck *u, const polyveck *h) {
   unsigned int i, j;
   poly v1,v0;
   for(i = 0; i < PARAM_K; ++i)
   {
-   poly_decompose(&v1,&v0,&u->vec[i]);
+   poly_decompose_param_ii(&v1,&v0,&u->vec[i]);
     for(j = 0; j < PARAM_N; ++j)
     {
      if(h->vec[i].coeffs[j] == 0)

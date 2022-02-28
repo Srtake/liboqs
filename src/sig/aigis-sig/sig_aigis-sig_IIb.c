@@ -27,17 +27,17 @@ OQS_SIG* OQS_SIG_aigis_sig_param_iib_new() {
     return sig;
 }
 
-extern int msig_keygen(uint8_t* pk, uint8_t* sk);
-extern int msig_sign(uint8_t* sk, uint8_t* m, size_t mlen, uint8_t* sm, size_t* smlen);
-extern int msig_verf(uint8_t* pk, uint8_t* sm, size_t smlen, uint8_t* m, size_t mlen);
+extern int msig_keygen_param_iib(uint8_t* pk, uint8_t* sk);
+extern int msig_sign_param_iib(uint8_t* sk, uint8_t* m, size_t mlen, uint8_t* sm, size_t* smlen);
+extern int msig_verf_param_iib(uint8_t* pk, uint8_t* sm, size_t smlen, uint8_t* m, size_t mlen);
 
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_keypair(uint8_t* public_key, uint8_t* secret_key) {
-    return (OQS_STATUS)msig_keygen(public_key, secret_key);
+    return (OQS_STATUS)msig_keygen_param_iib(public_key, secret_key);
 }
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_sign(uint8_t* signature, size_t* signature_len,  uint8_t* message, size_t message_len,  uint8_t* secret_key) {
-    return (OQS_STATUS)msig_sign(secret_key, message, message_len, signature, signature_len);
+    return (OQS_STATUS)msig_sign_param_iib(secret_key, message, message_len, signature, signature_len);
 }
 OQS_API OQS_STATUS OQS_SIG_aigis_sig_param_iib_verify( uint8_t* message, size_t message_len,  uint8_t* signature, size_t signature_len,  uint8_t* public_key) {
-    return (OQS_STATUS)msig_verf(public_key, signature, signature_len, message, message_len);
+    return (OQS_STATUS)msig_verf_param_iib(public_key, signature, signature_len, message, message_len);
 }
 #endif
